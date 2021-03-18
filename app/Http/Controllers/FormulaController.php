@@ -32,7 +32,7 @@ class FormulaController extends Controller
             $file->move(public_path('uploads/pdf/'), $fileName); //SIMPAN KE DALAM FOLDER PUBLIC/UPLOADS
         }
 
-        $formula = new formula();
+        $formula = new Formula();
         $formula->category_id = $request->category_id;
         $formula->name = $request->title;
         $formula->pdf_path = $fileName;
