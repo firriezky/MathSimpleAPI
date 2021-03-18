@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::any('formula/fetch','FormulaController@fetchAll');
+Route::any('questionex/fetch','QuestionexController@fetchAll');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();

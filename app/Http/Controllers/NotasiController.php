@@ -4,16 +4,18 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Formula;
+use App\Models\Notasi;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class FormulaController extends Controller
+class NotasiController extends Controller
 {
 
-    function showClass(Request $request, $id)
+    function showIndexAdmin(Request $request)
     {
-        $class = Category::findOrFail($id);
-        return view('admin.formula.manage')->with(compact('class'));
+        $notation = Notasi::all();
+        return view('admin.notation.manage')->with(compact('notation'));
     }
 
     function showDetail(Request $request)
@@ -24,22 +26,21 @@ class FormulaController extends Controller
 
     function store(Request $request)
     {
-
         $fileName = "";
-        if ($request->hasFile('pdf_file')) {
-            $file = $request->file('pdf_file'); //SIMPAN SEMENTARA FILENYA KE VARIABLE
+        if ($request->hasFile('audio_file')) {
+            $file = $request->file('audio_file'); //SIMPAN SEMENTARA FILENYA KE VARIABLE
             $fileName = $request->title . "_" . time() . '.' . $file->getClientOriginalExtension();
-            $file->move(public_path('uploads/pdf/'), $fileName); //SIMPAN KE DALAM FOLDER PUBLIC/UPLOADS
+            $file->move(public_path('uploads/audio/'), $fileName); //SIMPAN KE DALAM FOLDER PUBLIC/UPLOADS
         }
 
-        $formula = new Formula();
-        $formula->category_id = $request->category_id;
-        $formula->name = $request->title;
-        $formula->audio_path = $fileName;
-        $formula->formulas = $request->content;
-        $formula->save();
+        $object = new Notasi();
+        $object->notation = $request->notation;
+        $object->audio_path = $fileName;
+        $object->read = $request->read;
+        $object->description = $request->content;
+        $object->save();
 
-        if ($formula) {
+        if ($object) {
             return back()->with(["success" => "Rumus Berhasil Disimpan"]);
         } else {
             return back()->with(["error" => "Rumus Gagal Disimpan"]);
@@ -48,8 +49,8 @@ class FormulaController extends Controller
 
     public function destroy(Request $request)
     {
-        $formula = formula::findOrFail($request->id);
-        $formula->delete();
+        $object = Notasi::findOrFail($request->id);
+        $object->delete();
     }
 
 
@@ -85,31 +86,25 @@ class FormulaController extends Controller
     }
 
 
-
     function getAjax(Request $request)
     {
-        $data = Formula::where("category_id", '=', $request->id)
+        $data = Notasi::where("category_id", '=', $request->id)
             ->orderBy('created_at', 'ASC');
 
         if ($request->id == "") {
-            $data = Formula::all();
-        }
-
-        $object = array();
-        $object["draw"] = 0;
-        $object["recordsTotal"] = 0;
-        $object["recordsFiltered"] = 0;
-
-        foreach ($data as $row) {
-            $object["data"][] = [
-                "id" => $row->id,
-                "name" => $row->id,
-                "formula" => $row->id,
-            ];
+            $data = Notasi::all();
         }
 
         return DataTables::of($data)
             ->addIndexColumn()
+            ->escapeColumns('notation')
             ->make(true);
     }
+
+    public function edit(Request $request)
+    {
+        $object = Notasi::findOrFail($request->id);
+        return response()->json($object);
+    }
+    
 }

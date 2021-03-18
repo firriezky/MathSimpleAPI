@@ -125,6 +125,13 @@
         </div>
     </li>
 
+       <!-- Nav Item - Tables -->
+       <li class="nav-item">
+        <a class="nav-link" href="{{ url('/admin/notations/manage') }}">
+            <i class="fas fa-fw fa-table"></i>
+            <span>Notasi Matematika</span></a>
+    </li>
+
     <!-- Nav Item - Pages Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"

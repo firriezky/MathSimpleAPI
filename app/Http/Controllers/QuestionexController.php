@@ -4,16 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Formula;
+use App\Models\Questionex;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
-class FormulaController extends Controller
+class QuestionexController extends Controller
 {
 
     function showClass(Request $request, $id)
     {
         $class = Category::findOrFail($id);
-        return view('admin.formula.manage')->with(compact('class'));
+        return view('admin.questionex.manage')->with(compact('class'));
     }
 
     function showDetail(Request $request)
@@ -32,14 +33,14 @@ class FormulaController extends Controller
             $file->move(public_path('uploads/pdf/'), $fileName); //SIMPAN KE DALAM FOLDER PUBLIC/UPLOADS
         }
 
-        $formula = new Formula();
-        $formula->category_id = $request->category_id;
-        $formula->name = $request->title;
-        $formula->audio_path = $fileName;
-        $formula->formulas = $request->content;
-        $formula->save();
+        $object = new Questionex();
+        $object->category_id = $request->category_id;
+        $object->name = $request->title;
+        $object->pdf_path = $fileName;
+        $object->content = $request->content;
+        $object->save();
 
-        if ($formula) {
+        if ($object) {
             return back()->with(["success" => "Rumus Berhasil Disimpan"]);
         } else {
             return back()->with(["error" => "Rumus Gagal Disimpan"]);
@@ -48,18 +49,18 @@ class FormulaController extends Controller
 
     public function destroy(Request $request)
     {
-        $formula = formula::findOrFail($request->id);
-        $formula->delete();
+        $object = Questionex::findOrFail($request->id);
+        $object->delete();
     }
 
 
     function fetchAll(Request $request)
     {
-        $data = Formula::where("category_id", '=', $request->id)
+        $data = Questionex::where("category_id", '=', $request->id)
             ->orderBy('created_at', 'ASC');
 
         if ($request->id == "") {
-            $data = Formula::all();
+            $data = Questionex::all();
         }
 
         $object = array();
@@ -80,7 +81,7 @@ class FormulaController extends Controller
                 "updated_at" => $row->updated_at,
             ];
         }
-        $object['length'] = 0;
+        $object['length'] = $counter;
         return $object;
     }
 
@@ -88,24 +89,11 @@ class FormulaController extends Controller
 
     function getAjax(Request $request)
     {
-        $data = Formula::where("category_id", '=', $request->id)
+        $data = Questionex::where("category_id", '=', $request->id)
             ->orderBy('created_at', 'ASC');
 
         if ($request->id == "") {
-            $data = Formula::all();
-        }
-
-        $object = array();
-        $object["draw"] = 0;
-        $object["recordsTotal"] = 0;
-        $object["recordsFiltered"] = 0;
-
-        foreach ($data as $row) {
-            $object["data"][] = [
-                "id" => $row->id,
-                "name" => $row->id,
-                "formula" => $row->id,
-            ];
+            $data = Questionex::all();
         }
 
         return DataTables::of($data)
