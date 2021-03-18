@@ -27,7 +27,7 @@ class CkeditController extends Controller
 
         //KEMUDIAN KITA BUAT RESPONSE KE CKEDITOR
         $ckeditor = $request->input('CKEditorFuncNum');
-        $url = asset('uploads/ckeditor' . $fileName); 
+        $url = asset('uploads/ckeditor' ."/". $fileName); 
         $msg = 'Image uploaded successfully'; 
         //DENGNA MENGIRIMKAN INFORMASI URL FILE DAN MESSAGE
         $response = "<script>window.parent.CKEDITOR.tools.callFunction($ckeditor, '$url', '$msg')</script>";
