@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
-use App\Models\formula;
+use App\Models\Formula;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
