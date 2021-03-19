@@ -35,7 +35,6 @@ class FormulaController extends Controller
         $formula = new Formula();
         $formula->category_id = $request->category_id;
         $formula->name = $request->title;
-        $formula->audio_path = $fileName;
         $formula->formulas = $request->content;
         $formula->save();
 
@@ -80,7 +79,7 @@ class FormulaController extends Controller
                 "updated_at" => $row->updated_at,
             ];
         }
-        $object['length'] = 0;
+        $object['length'] = $counter;
         return $object;
     }
 
@@ -110,6 +109,7 @@ class FormulaController extends Controller
 
         return DataTables::of($data)
             ->addIndexColumn()
+            ->escapeColumns('formulas')
             ->make(true);
     }
 }

@@ -41,9 +41,9 @@ class QuestionexController extends Controller
         $object->save();
 
         if ($object) {
-            return back()->with(["success" => "Rumus Berhasil Disimpan"]);
+            return back()->with(["success" => "Contoh Soal Berhasil Disimpan"]);
         } else {
-            return back()->with(["error" => "Rumus Gagal Disimpan"]);
+            return back()->with(["error" => "Contoh Soal Gagal Disimpan"]);
         }
     }
 
@@ -66,21 +66,10 @@ class QuestionexController extends Controller
         $object = array();
         $object['status'] = 1;
         $object['length'] = 0;
+        $object['data'] = $data;
 
-        $counter = 0;
-        foreach ($data as $row) {
-            $counter++;
-            $category = Category::findOrfail($row->category_id);
-            $object["data"][] = [
-                "id" => $row->id,
-                "name" => $row->name,
-                "category" => $category->class_name,
-                "formula" => $row->formulas,
-                "pdf_path" => $row->pdf_path,
-                "created_at" => $row->created_at,
-                "updated_at" => $row->updated_at,
-            ];
-        }
+        $counter = count($data);
+      
         $object['length'] = $counter;
         return $object;
     }
@@ -98,6 +87,7 @@ class QuestionexController extends Controller
 
         return DataTables::of($data)
             ->addIndexColumn()
+            ->escapeColumns('content')
             ->make(true);
     }
 }

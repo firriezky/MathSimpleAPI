@@ -56,32 +56,14 @@ class NotasiController extends Controller
 
     function fetchAll(Request $request)
     {
-        $data = Formula::where("category_id", '=', $request->id)
-            ->orderBy('created_at', 'ASC');
-
-        if ($request->id == "") {
-            $data = Formula::all();
-        }
+        $data = Notasi::all();
+        $count = Notasi::all()->count();
 
         $object = array();
         $object['status'] = 1;
-        $object['length'] = 0;
-
-        $counter = 0;
-        foreach ($data as $row) {
-            $counter++;
-            $category = Category::findOrfail($row->category_id);
-            $object["data"][] = [
-                "id" => $row->id,
-                "name" => $row->name,
-                "category" => $category->class_name,
-                "formula" => $row->formulas,
-                "pdf_path" => $row->pdf_path,
-                "created_at" => $row->created_at,
-                "updated_at" => $row->updated_at,
-            ];
-        }
-        $object['length'] = 0;
+        $object['length'] = $count;
+        $object['data'] = $data;
+     
         return $object;
     }
 
