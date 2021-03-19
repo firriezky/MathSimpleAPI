@@ -13,9 +13,9 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::any('formula/fetch','FormulaController@fetchAll');
-Route::any('questionex/fetch','QuestionexController@fetchAll');
-Route::any('notation/fetch','NotasiController@fetchAll');
+Route::any('/formula/fetch','FormulaController@fetchAll');
+Route::any('/questionex/fetch','QuestionexController@fetchAll');
+Route::any('/notation/fetch','NotasiController@fetchAll');
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
