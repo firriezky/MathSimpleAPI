@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Formula;
+use DOMDocument;
+use DOMXPath;
 use Illuminate\Http\Request;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -60,6 +62,8 @@ class FormulaController extends Controller
         if ($request->id == "") {
             $data = Formula::all();
         }
+
+        
 
         $object = array();
         $object['status'] = 1;

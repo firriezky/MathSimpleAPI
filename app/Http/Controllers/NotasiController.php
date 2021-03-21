@@ -56,6 +56,8 @@ class NotasiController extends Controller
 
     function fetchAll(Request $request)
     {
+
+        
         $data = Notasi::all();
         $count = Notasi::all()->count();
 

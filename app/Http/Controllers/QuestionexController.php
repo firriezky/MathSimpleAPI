@@ -58,9 +58,11 @@ class QuestionexController extends Controller
     {
         $data = Questionex::where("category_id", '=', $request->id)
             ->orderBy('created_at', 'ASC');
+        $counter = $data->count();
 
         if ($request->id == "") {
             $data = Questionex::all();
+            $counter = Questionex::all()->count();
         }
 
         $object = array();
@@ -68,8 +70,8 @@ class QuestionexController extends Controller
         $object['length'] = 0;
         $object['data'] = $data;
 
-        $counter = count($data);
-      
+
+
         $object['length'] = $counter;
         return $object;
     }
