@@ -54,19 +54,22 @@ class FormulaController extends Controller
     }
 
 
-    function fetchAll(Request $request)
+    function fetchAll(Request $request , $formula_id)
     {
-        $data = Formula::where("category_id", '=', $request->id)
-            ->orderBy('created_at', 'ASC');
-
-        if ($request->id == "") {
+        $type = "";
+        if ($formula_id == "" || $formula_id == null) {
             $data = Formula::all();
+            $type = "no argument";
+        }else{
+            $data = Formula::where("category_id", '=', $formula_id)
+            ->get();
+            $type = "with argument";  
         }
-
-        
 
         $object = array();
         $object['status'] = 1;
+        $object['request'] = $formula_id;
+        $object['request_arg_status'] = $type;
         $object['length'] = 0;
 
         $counter = 0;
@@ -83,6 +86,7 @@ class FormulaController extends Controller
                 "updated_at" => $row->updated_at,
             ];
         }
+
         $object['length'] = $counter;
         return $object;
     }

@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 Route::any('/formula/fetch','FormulaController@fetchAll');
+Route::any('/formula/{formula_id}/fetch','FormulaController@fetchAll');
 Route::any('/questionex/fetch','QuestionexController@fetchAll');
 Route::any('/notation/fetch','NotasiController@fetchAll');
 

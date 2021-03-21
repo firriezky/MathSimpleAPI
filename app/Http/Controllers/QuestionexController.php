@@ -69,9 +69,6 @@ class QuestionexController extends Controller
         $object['status'] = 1;
         $object['length'] = 0;
         $object['data'] = $data;
-
-
-
         $object['length'] = $counter;
         return $object;
     }
