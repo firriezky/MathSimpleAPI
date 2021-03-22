@@ -24,7 +24,8 @@ use App\Http\Controllers\User\ProfileController;
 |
 */
 
-Route::view('/','welcome');
+
+Route::redirect('/','/login');
 Route::view('/cek','layout.ckeditor');
 
 Route::resource("ckeditor","CkeditController");
