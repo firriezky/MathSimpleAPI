@@ -109,6 +109,7 @@
                                 <th>No</th>
                                 <th>Nama Rumus</th>
                                 <th>Detail</th>
+                                <th>Edit</th>
                                 <th>Hapus</th>
                             </tr>
                         </thead>
@@ -170,7 +171,20 @@
 
                                 return html;
                             }
-                        }, {
+                        },
+                        {
+                            render: function(datum, type, row) {
+                                const html =
+                                    '<a href="{{ url('admin/formula/') }}' + "/" + row.id + '/edit">' +
+                                    '<button class="btn btn-success">' +
+                                    'Edit Rumus <span class="badge badge-primary"></span>' +
+                                    '</button>' +
+                                    '</a>';
+
+                                return html;
+                            }
+                        },
+                         {
                             render: function(datum, type, row) {
                                 console.log(row.id);
                                 const html =

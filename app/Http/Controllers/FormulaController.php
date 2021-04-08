@@ -23,6 +23,11 @@ class FormulaController extends Controller
         $formula = formula::findOrFail($request->id);
         return view("formula.index")->with(compact("formula"));
     }
+    function viewAdminEdit(Request $request)
+    {
+        $formula = formula::findOrFail($request->id);
+        return view("admin.formula.edit")->with(compact("formula"));
+    }
 
     function store(Request $request)
     {
@@ -53,6 +58,20 @@ class FormulaController extends Controller
         $formula->delete();
     }
 
+    public function update(Request $request)
+    {
+        $formula = formula::findOrFail($request->formula_id);
+        $formula->name = $request->name;
+        $formula->pdf_path=$request->pdf_path;
+        $formula->formulas=$request->content;
+        $formula->save();
+
+        if ($formula) {
+            return redirect()->back()->with(["success"=>"Berhasil Mengupdate Rumus"]);
+        }else{
+            return redirect()->back()->with(["error"=>"Gagal Mengupdate Rumus"]);
+        }
+    }
 
     function fetchAll(Request $request , $formula_id)
     {
