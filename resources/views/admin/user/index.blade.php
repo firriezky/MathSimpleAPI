@@ -251,7 +251,6 @@
 
         $(".btn-destroy").on("click", function() {
             var id = $(this).attr("id")
-
             $.ajax({
                 url: "/admin/user/" + id,
                 method: "DELETE",
