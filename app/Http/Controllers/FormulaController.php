@@ -68,7 +68,7 @@ class FormulaController extends Controller
 
         $categoryID= $formula->category_id;
         if ($formula) {
-            return redirect('/admin/formula/category/$categoryID')->with(["success"=>"Berhasil Mengupdate Rumus"]);
+            return redirect("/admin/formula/category/$categoryID")->with(["success"=>"Berhasil Mengupdate Rumus"]);
         }else{
             return redirect("/admin/formula/category/$categoryID")->with(["error"=>"Gagal Mengupdate Rumus"]);
         }
