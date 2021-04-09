@@ -46,7 +46,6 @@
 
 
     <div class="card">
-        <img class="card-img-top" src="holder.js/100x180/" alt="">
         <div class="card-body">
             <form action="{{ route('formula.update') }}" method="post">
                 @csrf
@@ -73,7 +72,7 @@
 
                 <div class="form-group">
                     <label for="">Isi Rumus</label>
-                    <textarea class="form-control" name="content" id="editor" rows="5">{{ $formula->formulas }}</textarea>
+                    <textarea class="form-control" style="height: 500px" name="content" id="editor" rows="5">{{ $formula->formulas }}</textarea>
                 </div>
                 <button type="submit" class="btn btn-primary">Submit</button>
             </form>
